@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitário Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f2027">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+    
+    <!-- Apple Specific PWA Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Amor Solitário">
+</head>
+<body>
+    <header>
+        <div class="title">❤️ SOLITÁRIO</div>
+        <div class="controls">
+            <div class="stat stat-desktop" title="Pontos">⭐ <span class="stat-label">Pontos: </span><span id="score-count">0</span></div>
+            <div class="stat stat-desktop" title="Jogadas">🕹️ <span class="stat-label">Jogadas: </span><span id="moves-count">0</span></div>
+            <div class="stat stat-desktop" title="Tempo">⏱️ <span class="stat-label">Tempo: </span><span id="timer">00:00</span></div>
+            <button class="btn" id="undo-btn" disabled>↩️</button>
+            <button class="btn" id="auto-btn" style="display: none;">✨ Auto</button>
+            <button class="btn" id="restart-btn">Novo</button>
+        </div>
+    </header>
+    <!-- Mobile stats bar -->
+    <div class="mobile-stats-bar">
+        <div class="mobile-stat">⭐ <span id="score-count-m">0</span></div>
+        <div class="mobile-stat">🕹️ <span id="moves-count-m">0</span></div>
+        <div class="mobile-stat">⏱️ <span id="timer-m">00:00</span></div>
+    </div>
+
+    <div class="game-board">
+        <div class="top-section">
+            <div class="left-top">
+                <div class="card-slot" id="stock"></div>
+                <div class="card-slot" id="waste"></div>
+            </div>
+            <div class="right-top">
+                <div class="card-slot foundation" id="foundation-0" data-suit="hearts"><div class="center-suit" style="opacity:0.3;font-size:40px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">♥</div></div>
+                <div class="card-slot foundation" id="foundation-1" data-suit="diamonds"><div class="center-suit" style="opacity:0.3;font-size:40px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">♦</div></div>
+                <div class="card-slot foundation" id="foundation-2" data-suit="clubs"><div class="center-suit" style="opacity:0.3;font-size:40px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">♣</div></div>
+                <div class="card-slot foundation" id="foundation-3" data-suit="spades"><div class="center-suit" style="opacity:0.3;font-size:40px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">♠</div></div>
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <div class="tableau-pile" id="tableau-0"></div>
+            <div class="tableau-pile" id="tableau-1"></div>
+            <div class="tableau-pile" id="tableau-2"></div>
+            <div class="tableau-pile" id="tableau-3"></div>
+            <div class="tableau-pile" id="tableau-4"></div>
+            <div class="tableau-pile" id="tableau-5"></div>
+            <div class="tableau-pile" id="tableau-6"></div>
+        </div>
+        
+        <div class="win-overlay" id="win-screen">
+            <div class="win-title">GANHASTE!</div>
+            <div class="win-stats">
+            Tempo: <span id="win-time">00:00</span><br>
+            Jogadas: <span id="win-moves">0</span><br>
+            Pontos: <span id="win-score">0</span>
+        </div>
+        <button class="btn" id="win-restart-btn" style="font-size: 20px; padding: 15px 40px;">Jogar Novamente</button>
+    </div>
+
+    <!-- No Moves Screen -->
+    <div class="win-overlay" id="no-moves-screen">
+        <div class="win-title" style="color: #ffb6c1; background: none; text-shadow: 0 4px 10px rgba(255,182,193,0.3);">Sem Movimentos!</div>
+        <div class="win-stats" style="color: white;">Parece que chegaste a um beco sem saída.<br>Usa o botão de voltar atrás para tentares uma estratégia diferente.</div>
+        <div style="display: flex; gap: 20px;">
+            <button class="btn" id="no-moves-undo-btn" style="font-size: 18px; padding: 15px 30px; background: #2c3e50;">↩️ Desfazer</button>
+            <button class="btn" id="no-moves-restart-btn" style="font-size: 18px; padding: 15px 30px;">🔄 Novo Jogo</button>
+        </div>
+    </div>
+        
+        <div class="love-letter-overlay" id="love-letter-screen">
+            <div class="love-letter-card">
+                <h2>Para ti, meu amor ❤️</h2>
+                <p>Escrevi cada linha deste código a pensar em ti.</p>
+                <p>Fiz este jogo para que possas relaxar e te divertires. Quero que te lembres sempre que o meu pensamento está contigo em cada pequeno momento.</p>
+                <p>Amo-te muito.</p>
+                <button class="btn btn-love" id="close-letter-btn">Começar a Jogar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js');
+        });
+      }
+    </script>
+    <script src="js/solitaire.js"></script>
+</body>
+</html>

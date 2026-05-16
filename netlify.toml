@@ -1,0 +1,19 @@
+
+[build]
+  # Diz ao Netlify que a pasta base é a pasta principal (onde está o index.html)
+  publish = "."
+
+# Configurações de Cache para a PWA (Aplicação Offline)
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    # Isto é CRUCIAL para PWAs: garante que o telemóvel dela procura sempre 
+    # atualizações do jogo e não fica preso numa versão antiga para sempre.
+    Cache-Control = "no-cache"
+
+# Segurança extra
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
